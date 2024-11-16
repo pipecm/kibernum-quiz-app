@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Clone") {
+            steps {
+                sh "echo 'Cloning from GitHub...'"
+                git branch: "main", url: 'https://github.com/pipecm/kibernum-quiz-app.git'
+                sh "echo 'Cloned successfully'"
+            }
+        }
+
+        stage("Build") {
+            steps {
+                sh "echo 'Building app...'"
+                sh "mvn clean package"
+                sh "echo 'Built successfully'"
+            }
+        }
+
+        stage("Test") {
+            steps {
+                sh "echo 'Running tests...'"
+                sh "mvn test"
+                sh "echo 'Tests ran successfully'"
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                sh "echo 'Deploying...'"
+                sh "docker compose up -d --build"
+                sh "echo 'Deployment finished successfully...'"
+            }
+        }
+    }
+}
