@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  quiz-app:
+    container_name: quiz-app
+    restart: always
+    build:
+      dockerfile: docker/Dockerfile
+    ports:
+      - 8090:8090
